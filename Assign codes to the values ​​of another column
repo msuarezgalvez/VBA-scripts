@@ -1,0 +1,36 @@
+#SCRIPT para asignar códigos a su comuna correspondiente a partir de un diccionario txt, recordar cambiar las columnas.
+
+Sub AsignarCodigoComuna()
+Dim dicComunas As Object
+Dim rngComuna As Range
+Dim rngCodigo As Range
+Dim strLine As String
+Dim arrLine As Variant
+Dim i As Long
+
+' Crear un diccionario para almacenar las comunas y códigos
+Set dicComunas = CreateObject("Scripting.Dictionary")
+
+' Abrir el archivo de texto y cargar los datos en el diccionario
+Open "C:RUTA DEL ARCHIVO" For Input As #1
+Do Until EOF(1)
+    Line Input #1, strLine
+    arrLine = Split(strLine, ",")
+    dicComunas.Add Trim(UCase(arrLine(1))), Trim(arrLine(0))
+Loop
+Close #1
+
+' Recorrer la columna AB con las comunas
+For i = 1 To Cells(Rows.Count, "AB").End(xlUp).Row
+    If Cells(i, "AB").Value <> "" Then
+        If dicComunas.Exists(UCase(Cells(i, "AB").Value)) Then
+            ' Cambiar el formato de la columna AC a texto
+            Cells(i, "AC").NumberFormat = "@"
+
+            ' Asignar el código correspondiente en la columna AC
+            Cells(i, "AC").Value = dicComunas(UCase(Cells(i, "AB").Value))
+        End If
+    End If
+Next i
+
+End Sub
