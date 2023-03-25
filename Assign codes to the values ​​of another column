@@ -1,4 +1,4 @@
-#SCRIPT para asignar códigos a su comuna correspondiente a partir de un diccionario txt, recordar cambiar las columnas.
+#SCRIPT para asignar códigos a su comuna correspondiente a partir de un diccionario txt, recordar cambiar las columnas AB y AC dependiendo de las necesidades.
 
 Sub AsignarCodigoComuna()
 Dim dicComunas As Object
