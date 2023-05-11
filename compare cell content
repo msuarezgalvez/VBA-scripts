@@ -1,3 +1,7 @@
+# Formato de la función   =CompararCeldas(A;B)
+#Si A y B tienen una palabra distinta
+
+
 Function CompararCeldas(celda1 As Range, celda2 As Range) As Variant
     Dim str1 As String
     Dim str2 As String
