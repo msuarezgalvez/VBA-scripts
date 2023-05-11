@@ -1,5 +1,5 @@
 # Formato de la función   =CompararCeldas(A;B)
-#Si A y B tienen una o más palabras distintas
+#Si A y B tienen una o más palabras distintas se mostrarán las que estan en A, pero no en B
 
 
 Function CompararCeldas(celda1 As Range, celda2 As Range) As Variant
