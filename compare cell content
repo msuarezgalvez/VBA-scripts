@@ -1,0 +1,31 @@
+Function CompararCeldas(celda1 As Range, celda2 As Range) As Variant
+    Dim str1 As String
+    Dim str2 As String
+    Dim arr1 As Variant
+    Dim arr2 As Variant
+    Dim i As Integer
+    Dim j As Integer
+    Dim dif As Boolean
+    
+    str1 = Replace(Trim(celda1.Value), " ", "|")
+    str2 = Replace(Trim(celda2.Value), " ", "|")
+    arr1 = Split(str1, "|")
+    arr2 = Split(str2, "|")
+    
+    dif = False
+    For i = LBound(arr1) To UBound(arr1)
+        For j = LBound(arr2) To UBound(arr2)
+            If arr1(i) = arr2(j) Then
+                Exit For
+            ElseIf j = UBound(arr2) Then
+                dif = True
+                CompararCeldas = arr1(i)
+            End If
+        Next j
+    Next i
+    
+    If dif = False Then
+        CompararCeldas = "Igual"
+    End If
+    
+End Function
