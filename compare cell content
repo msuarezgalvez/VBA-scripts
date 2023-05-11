@@ -1,5 +1,5 @@
 # Formato de la función   =CompararCeldas(A;B)
-#Si A y B tienen una palabra distinta
+#Si A y B tienen una o más palabras distintas
 
 
 Function CompararCeldas(celda1 As Range, celda2 As Range) As Variant
@@ -10,6 +10,7 @@ Function CompararCeldas(celda1 As Range, celda2 As Range) As Variant
     Dim i As Integer
     Dim j As Integer
     Dim dif As Boolean
+    Dim palabrasDiferentes As String
     
     str1 = Replace(Trim(celda1.Value), " ", "|")
     str2 = Replace(Trim(celda2.Value), " ", "|")
@@ -23,13 +24,18 @@ Function CompararCeldas(celda1 As Range, celda2 As Range) As Variant
                 Exit For
             ElseIf j = UBound(arr2) Then
                 dif = True
-                CompararCeldas = arr1(i)
+                palabrasDiferentes = palabrasDiferentes & arr1(i) & "; "
             End If
         Next j
     Next i
     
     If dif = False Then
-        CompararCeldas = "Igual"
+        palabrasDiferentes = "Igual"
+    Else
+        palabrasDiferentes = Left(palabrasDiferentes, Len(palabrasDiferentes) - 2)
     End If
     
+    CompararCeldas = palabrasDiferentes
+    
 End Function
+
