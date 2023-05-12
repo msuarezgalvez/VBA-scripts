@@ -1,0 +1,41 @@
+Sub ExportarColumnasAPDF()
+    Dim RangoDatos As Range
+    Dim ColumnasSeleccionadas As Range
+    Dim ArchivoPDF As String
+    
+    ' Seleccionar las columnas que deseas exportar a PDF
+    On Error Resume Next
+    Set ColumnasSeleccionadas = Application.InputBox("Selecciona las columnas que deseas exportar", Type:=8)
+    On Error GoTo 0
+    
+    ' Salir si no se seleccionaron columnas
+    If ColumnasSeleccionadas Is Nothing Then
+        Exit Sub
+    End If
+    
+    ' Definir el rango de datos a exportar (incluyendo encabezados)
+    Set RangoDatos = Intersect(ActiveSheet.UsedRange, ColumnasSeleccionadas)
+    
+    ' Salir si no hay datos en las columnas seleccionadas
+    If RangoDatos Is Nothing Then
+        Exit Sub
+    End If
+    
+    ' Seleccionar la ubicación y el nombre del archivo PDF
+    ArchivoPDF = Application.GetSaveAsFilename(fileFilter:="Archivos PDF (*.pdf), *.pdf")
+    
+    ' Salir si no se seleccionó un archivo
+    If ArchivoPDF = "False" Then
+        Exit Sub
+    End If
+    
+    ' Exportar el rango de datos a PDF
+    With ActiveSheet.PageSetup
+        .Orientation = xlPortrait ' Orientación vertical
+        .FitToPagesWide = 1 ' Ajustar al ancho de una página
+        .PrintArea = RangoDatos.Address ' Definir el área de impresión
+    End With
+    
+    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:= _
+        ArchivoPDF, Quality:=xlQualityStandard, IncludeDocProperties:=True, IgnorePrintAreas:=False
+End Sub
