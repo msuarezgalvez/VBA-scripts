@@ -1,1 +1,5 @@
+# eliminar los guiones (-), 
+espacios y los dos últimos dígitos de una columna en Excel en el idioma español, puedes utilizar la función IZQUIERDA junto con la función LARGO
 
+
+=IZQUIERDA(SUSTITUIR(SUSTITUIR(A1;"-";"");" ";"");LARGO(SUSTITUIR(SUSTITUIR(A1;"-";"");" ";""))-2)
