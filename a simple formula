@@ -3,3 +3,8 @@ espacios y los dos últimos dígitos de una columna en Excel en el idioma españ
 
 
 =IZQUIERDA(SUSTITUIR(SUSTITUIR(A1;"-";"");" ";"");LARGO(SUSTITUIR(SUSTITUIR(A1;"-";"");" ";""))-2)
+
+# Ejemplo de un buscarv con un si.error
+
+=SI.ERROR(BUSCARV(E2;'[78053560-1_prestaciones.xlsx]Prestaciones autorizadas Clínic'!$A:$B;1;FALSO);"El valor no se encuentra")
+
