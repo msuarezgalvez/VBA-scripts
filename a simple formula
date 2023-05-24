@@ -9,3 +9,8 @@ espacios y los dos últimos dígitos de una columna en Excel en el idioma españ
 =SI.ERROR(BUSCARV(E2;'[78053560-1_prestaciones.xlsx]Prestaciones autorizadas Clínic'!$A:$B;1;FALSO);"El valor no se encuentra")
 
 o para quitar espacios usar =espacio([celda])
+
+
+# Para saber si un elemento de la columna está en otra columna (puede ser de otra hoja) 
+
+=SI(CONTAR.SI([Rango donde se busca];[Valor buscado])>0;"El valor está en la otra hoja";"El valor no está en la otra hoja")
