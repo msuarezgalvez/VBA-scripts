@@ -14,3 +14,8 @@ o para quitar espacios usar =espacio([celda])
 # Para saber si un elemento de la columna está en otra columna (puede ser de otra hoja) 
 
 =SI(CONTAR.SI([Rango donde se busca];[Valor buscado])>0;"El valor está en la otra hoja";"El valor no está en la otra hoja")
+
+
+# Quitar guiones y las dos últimas cifras
+
+=CONCAT(SUSTITUIR(IZQUIERDA(A4;LARGO(A4)-2);"-";""))
