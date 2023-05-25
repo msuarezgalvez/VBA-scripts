@@ -16,6 +16,6 @@ o para quitar espacios usar =espacio([celda])
 =SI(CONTAR.SI([Rango donde se busca];[Valor buscado])>0;"El valor está en la otra hoja";"El valor no está en la otra hoja")
 
 
-# Quitar guiones y las dos últimas cifras
+#### Quitar guiones y las dos últimas cifras
 
 =CONCAT(SUSTITUIR(IZQUIERDA(A4;LARGO(A4)-2);"-";""))
