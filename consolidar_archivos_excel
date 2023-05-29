@@ -1,0 +1,73 @@
+Sub ConsolidarArchivosExcel()
+    Dim FolderPath As String
+    Dim SelectedFiles() As Variant
+    Dim TotalFiles As Integer
+    Dim MasterWorkbook As Workbook
+    Dim MasterWorksheet As Worksheet
+    Dim CurrentWorkbook As Workbook
+    Dim CurrentWorksheet As Worksheet
+    Dim LastRow As Long
+    Dim FilePath As Variant
+    Dim i As Integer
+    Dim j As Integer
+    
+    ' Selecciona la carpeta que contiene los archivos a consolidar
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Seleccionar carpeta de archivos"
+        If .Show <> -1 Then Exit Sub
+        FolderPath = .SelectedItems(1)
+    End With
+    
+    ' Selecciona los archivos a consolidar
+    With Application.FileDialog(msoFileDialogFilePicker)
+        .Title = "Seleccionar archivos a consolidar"
+        .AllowMultiSelect = True
+        .Filters.Clear
+        .Filters.Add "Archivos de Excel", "*.xlsx; *.xlsm; *.xls"
+        If .Show <> -1 Then Exit Sub
+        TotalFiles = .SelectedItems.Count
+        ReDim SelectedFiles(1 To TotalFiles)
+        For i = 1 To TotalFiles
+            SelectedFiles(i) = .SelectedItems(i)
+        Next i
+    End With
+    
+    ' Crea un nuevo libro de trabajo para consolidar los datos
+    Set MasterWorkbook = Workbooks.Add
+    Set MasterWorksheet = MasterWorkbook.Sheets(1)
+    
+    ' Copia los encabezados de la primera columna
+    MasterWorksheet.Range("A1:M1").Value = Array("COD_PAQUETE", "NOMBRE_PAQ", "COD_CONVENIO", "CONVENIO", _
+        "TIPO_CONSUMO", "CODIGO_PREST_FARMACIA_ROL", "NOMBRE", "CANTIDAD", "VALOR_UNITARIO", _
+        "VIGENCIA_PAQUETE", "VIGENCIA_PRECIO", "VIGENCIA_TIPOCONSUMO", "EXCLUYE")
+    
+    ' Recorre cada archivo seleccionado y copia los datos al archivo consolidado
+    For i = 1 To TotalFiles
+        FilePath = SelectedFiles(i)
+        Set CurrentWorkbook = Workbooks.Open(FilePath)
+        Set CurrentWorksheet = CurrentWorkbook.Sheets(1)
+        
+        LastRow = CurrentWorksheet.Cells(CurrentWorksheet.Rows.Count, 1).End(xlUp).Row
+        
+        ' Copia los datos a la hoja de cálculo consolidada
+        For j = 2 To LastRow
+            MasterWorksheet.Cells(MasterWorksheet.Cells(MasterWorksheet.Rows.Count, 1).End(xlUp).Row + 1, 1).Resize(1, 13).Value = _
+                CurrentWorksheet.Cells(j, 1).Resize(1, 13).Value
+        Next j
+        
+        CurrentWorkbook.Close SaveChanges:=False
+    Next i
+    
+    ' Ajusta el ancho de las columnas
+    MasterWorksheet.Columns.AutoFit
+    
+    ' Guarda el archivo consolidado con un nombre y ubicación deseada
+    Application.DisplayAlerts = False
+    MasterWorkbook.SaveAs FolderPath & "\Archivo_Consolidado.xlsx"
+    Application.DisplayAlerts = True
+    
+    ' Cierra el archivo consolidado
+    MasterWorkbook.Close SaveChanges:=False
+    
+    MsgBox "La consolidación se ha completado correctamente.", vbInformation
+End Sub
