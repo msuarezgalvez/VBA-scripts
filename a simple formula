@@ -19,3 +19,12 @@ o para quitar espacios usar =espacio([celda])
 #### Quitar guiones y las dos últimas cifras
 
 =CONCAT(SUSTITUIR(IZQUIERDA(A4;LARGO(A4)-2);"-";""))
+
+## Transformar a formato dd-mm-yyyy
+
+=TEXTO(A1;"dd-mm-yyyy")
+
+Si por ejemplo tengo una fecha 5-5-2022, la fórmula anterior la dejará como 05-05-2022
+
+
+
