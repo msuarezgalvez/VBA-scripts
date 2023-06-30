@@ -26,5 +26,6 @@ o para quitar espacios usar =espacio([celda])
 
 Si por ejemplo tengo una fecha 5-5-2022, la fórmula anterior la dejará como 05-05-2022
 
+#fórmula para quitar los ceros a la izquierda de una cifra
 
-
+=TEXTO(VALOR(IZQUIERDA(E3;ENCONTRAR("-";E3)-1));"0") & EXTRAE(E3;ENCONTRAR("-";E3);LARGO(E3))
